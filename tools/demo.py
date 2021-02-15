@@ -104,7 +104,7 @@ def main():
                 polygon = np.array(outputs['polygon']).astype(np.int32)
                 cv2.polylines(frame, [polygon.reshape((-1, 1, 2))],
                               True, (0, 255, 0), 3)
-                v2.polylines(edges, [polygon.reshape((-1, 1, 2))],
+                cv2.polylines(edges, [polygon.reshape((-1, 1, 2))],
                               True, (0, 255, 0), 3)
                 mask = ((outputs['mask'] > cfg.TRACK.MASK_THERSHOLD) * 255)
                 mask = mask.astype(np.uint8)
