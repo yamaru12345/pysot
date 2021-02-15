@@ -22,7 +22,7 @@ parser.add_argument('--config', type=str, help='config file')
 parser.add_argument('--snapshot', type=str, help='model name')
 parser.add_argument('--video_name', default='', type=str,
                     help='videos or image files')
-parser.add_argument('--box', default=[100, 100, 100, 100], type=list)
+parser.add_argument('--box', default='', type=str)
 args = parser.parse_args()
 
 
@@ -81,8 +81,8 @@ def main():
     #cv2.namedWindow(video_name, cv2.WND_PROP_FULLSCREEN)
     for i, frame in enumerate(get_frames(args.video_name)):
         if first_frame:
-            init_rect = args.box
-            print(init_rect)
+            with open(args.box, 'r') as f:
+              init_rect = [float(v) for v in f.read().split(',')]
             tracker.init(frame, init_rect)
             first_frame = False
         else:
