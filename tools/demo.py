@@ -10,7 +10,6 @@ import cv2
 import torch
 import numpy as np
 from glob import glob
-from matplotlib import pyplot as plt
 
 from pysot.core.config import cfg
 from pysot.models.model_builder import ModelBuilder
@@ -79,7 +78,7 @@ def main():
     else:
         video_name = 'webcam'
     #cv2.namedWindow(video_name, cv2.WND_PROP_FULLSCREEN)
-    for frame in get_frames(args.video_name):
+    for i, frame in enumerate(get_frames(args.video_name)):
         if first_frame:
             init_rect = [100, 100, 50, 50]
             tracker.init(frame, init_rect)
@@ -101,8 +100,7 @@ def main():
                               (0, 255, 0), 3)
             #cv2.imshow(video_name, frame)
             #cv2.waitKey(40)
-            plt.imshow(frame)
-            plt.show()
+            cv2.imwrite(f'./tr_{i:06d}.jpg', frame)
 
 
 if __name__ == '__main__':
