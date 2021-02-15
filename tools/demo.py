@@ -103,9 +103,9 @@ def main():
             if 'polygon' in outputs:
                 polygon = np.array(outputs['polygon']).astype(np.int32)
                 cv2.polylines(frame, [polygon.reshape((-1, 1, 2))],
-                              True, (0, 255, 0), 3)
+                              True, (0, 255, 0), 1)
                 cv2.polylines(edges, [polygon.reshape((-1, 1, 2))],
-                              True, (0, 255, 0), 3)
+                              True, (0, 255, 0), 1)
                 mask = ((outputs['mask'] > cfg.TRACK.MASK_THERSHOLD) * 255)
                 mask = mask.astype(np.uint8)
                 mask = np.stack([mask, mask*255, mask]).transpose(1, 2, 0)
