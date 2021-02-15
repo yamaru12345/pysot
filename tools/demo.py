@@ -10,6 +10,7 @@ import cv2
 import torch
 import numpy as np
 from glob import glob
+from matplotlib import pyplot as plt
 
 from pysot.core.config import cfg
 from pysot.models.model_builder import ModelBuilder
