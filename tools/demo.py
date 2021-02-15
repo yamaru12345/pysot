@@ -109,7 +109,7 @@ def main():
                 mask = ((outputs['mask'] > cfg.TRACK.MASK_THERSHOLD) * 255)
                 mask = mask.astype(np.uint8)
                 mask = np.stack([mask, mask*255, mask]).transpose(1, 2, 0)
-                frame = cv2.addWeighted(frame, 0.77, mask, 0.23, -1)
+                #frame = cv2.addWeighted(frame, 0.77, mask, 0.23, -1)
                 edges = cv2.addWeighted(edges, 0.77, mask, 0.23, -1)
             else:
                 bbox = list(map(int, outputs['bbox']))
