@@ -5,6 +5,7 @@ from __future__ import unicode_literals
 
 import os
 import argparse
+import pickle
 
 import cv2
 import torch
@@ -79,6 +80,7 @@ def main():
     else:
         video_name = 'webcam'
     #cv2.namedWindow(video_name, cv2.WND_PROP_FULLSCREEN)
+    result = {}
     for i, frame in enumerate(get_frames(args.video_name)):
         if first_frame:
             with open(args.box, 'r') as f:
@@ -97,6 +99,7 @@ def main():
             
         else:
             outputs = tracker.track(frame)
+            result[i] = outputs
             edges = cv2.Canny(frame, 100, 200, L2gradient=True)
             edges = cv2.cvtColor(edges, cv2.COLOR_GRAY2BGR).copy()
             edges[np.where((edges == [0, 0, 0]).all(axis=2))] = [17, 17, 56]
@@ -123,7 +126,9 @@ def main():
             #cv2.waitKey(40)
             cv2.imwrite(f'./tr_{i:06d}.jpg', frame)
             cv2.imwrite(f'./eg_{i:06d}.jpg', edges[:, :, ::-1])
-
+    
+    with open('./tr_result.pkl', 'wb') as f:
+      pickle.dump(result, f)
 
 if __name__ == '__main__':
     main()
