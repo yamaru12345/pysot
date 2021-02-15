@@ -80,7 +80,7 @@ def main():
     #cv2.namedWindow(video_name, cv2.WND_PROP_FULLSCREEN)
     for i, frame in enumerate(get_frames(args.video_name)):
         if first_frame:
-            init_rect = [500, 700, 100, 100]
+            init_rect = [500, 1000, 100, 100]
             tracker.init(frame, init_rect)
             first_frame = False
         else:
