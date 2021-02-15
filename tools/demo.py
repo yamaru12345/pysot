@@ -85,24 +85,46 @@ def main():
               init_rect = [float(v) for v in f.read().split(',')]
             tracker.init(frame, init_rect)
             first_frame = False
+            cv2.rectangle(frames, (init_rect[0], init_rect[1]),
+                          (init_rect[0]+init_rect[2], init_rect[1]+init_rect[3]),
+                          (0, 255, 0), 1)  
+            cv2.imwrite(f'./tr_{i:06d}.jpg', frames)
+            edges = cv2.Canny(frame, 100, 200, L2gradient=True)
+            edges = cv2.cvtColor(edges, cv2.COLOR_GRAY2BGR).copy()
+            edges[np.where((vis == [0, 0, 0]).all(axis=2))] = [17, 17, 56]
+            cv2.rectangle(edges, (init_rect[0], init_rect[1]),
+                          (init_rect[0]+init_rect[2], init_rect[1]+init_rect[3]),
+                          (0, 255, 0), 1)
+            cv2.imwrite(f'./eg_{i:06d}.jpg', edges)
+            
         else:
             outputs = tracker.track(frame)
+            edges = cv2.Canny(frame, 100, 200, L2gradient=True)
+            edges = cv2.cvtColor(edges, cv2.COLOR_GRAY2BGR).copy()
+            edges[np.where((vis == [0, 0, 0]).all(axis=2))] = [17, 17, 56]
             if 'polygon' in outputs:
                 polygon = np.array(outputs['polygon']).astype(np.int32)
                 cv2.polylines(frame, [polygon.reshape((-1, 1, 2))],
+                              True, (0, 255, 0), 3)
+                v2.polylines(edges, [polygon.reshape((-1, 1, 2))],
                               True, (0, 255, 0), 3)
                 mask = ((outputs['mask'] > cfg.TRACK.MASK_THERSHOLD) * 255)
                 mask = mask.astype(np.uint8)
                 mask = np.stack([mask, mask*255, mask]).transpose(1, 2, 0)
                 frame = cv2.addWeighted(frame, 0.77, mask, 0.23, -1)
+                edges = cv2.addWeighted(edges, 0.77, mask, 0.23, -1)
             else:
                 bbox = list(map(int, outputs['bbox']))
                 cv2.rectangle(frame, (bbox[0], bbox[1]),
                               (bbox[0]+bbox[2], bbox[1]+bbox[3]),
-                              (0, 255, 0), 3)
+                              (0, 255, 0), 1)
+                cv2.rectangle(edges, (bbox[0], bbox[1]),
+                              (bbox[0]+bbox[2], bbox[1]+bbox[3]),
+                              (0, 255, 0), 1)
             #cv2.imshow(video_name, frame)
             #cv2.waitKey(40)
             cv2.imwrite(f'./tr_{i:06d}.jpg', frame)
+            cv2.imwrite(f'./eg_{i:06d}.jpg', edges)
 
 
 if __name__ == '__main__':
