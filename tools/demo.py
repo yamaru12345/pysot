@@ -85,10 +85,10 @@ def main():
               init_rect = [float(v) for v in f.read().split(',')]
             tracker.init(frame, init_rect)
             first_frame = False
-            cv2.rectangle(frames, (init_rect[0], init_rect[1]),
+            cv2.rectangle(frame, (init_rect[0], init_rect[1]),
                           (init_rect[0]+init_rect[2], init_rect[1]+init_rect[3]),
                           (0, 255, 0), 1)  
-            cv2.imwrite(f'./tr_{i:06d}.jpg', frames)
+            cv2.imwrite(f'./tr_{i:06d}.jpg', frame)
             edges = cv2.Canny(frame, 100, 200, L2gradient=True)
             edges = cv2.cvtColor(edges, cv2.COLOR_GRAY2BGR).copy()
             edges[np.where((vis == [0, 0, 0]).all(axis=2))] = [17, 17, 56]
