@@ -22,6 +22,7 @@ parser.add_argument('--config', type=str, help='config file')
 parser.add_argument('--snapshot', type=str, help='model name')
 parser.add_argument('--video_name', default='', type=str,
                     help='videos or image files')
+parser.add_argument('--box', default=[100, 100, 100, 100], type=list)
 args = parser.parse_args()
 
 
