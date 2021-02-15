@@ -99,7 +99,7 @@ def main():
             outputs = tracker.track(frame)
             edges = cv2.Canny(frame, 100, 200, L2gradient=True)
             edges = cv2.cvtColor(edges, cv2.COLOR_GRAY2BGR).copy()
-            edges[np.where((vis == [0, 0, 0]).all(axis=2))] = [17, 17, 56]
+            edges[np.where((edges == [0, 0, 0]).all(axis=2))] = [17, 17, 56]
             if 'polygon' in outputs:
                 polygon = np.array(outputs['polygon']).astype(np.int32)
                 cv2.polylines(frame, [polygon.reshape((-1, 1, 2))],
