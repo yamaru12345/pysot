@@ -91,7 +91,7 @@ def main():
             cv2.imwrite(f'./tr_{i:06d}.jpg', frame)
             edges = cv2.Canny(frame, 100, 200, L2gradient=True)
             edges = cv2.cvtColor(edges, cv2.COLOR_GRAY2BGR).copy()
-            edges[np.where((vis == [0, 0, 0]).all(axis=2))] = [17, 17, 56]
+            edges[np.where((edges == [0, 0, 0]).all(axis=2))] = [17, 17, 56]
             cv2.rectangle(edges, p1, p2, (0, 255, 0), 1)  
             cv2.imwrite(f'./eg_{i:06d}.jpg', edges)
             
