@@ -77,13 +77,10 @@ def main():
         video_name = args.video_name.split('/')[-1].split('.')[0]
     else:
         video_name = 'webcam'
-    cv2.namedWindow(video_name, cv2.WND_PROP_FULLSCREEN)
+    #cv2.namedWindow(video_name, cv2.WND_PROP_FULLSCREEN)
     for frame in get_frames(args.video_name):
         if first_frame:
-            try:
-                init_rect = cv2.selectROI(video_name, frame, False, False)
-            except:
-                exit()
+            init_rect = [100, 100, 50, 50]
             tracker.init(frame, init_rect)
             first_frame = False
         else:
@@ -101,8 +98,10 @@ def main():
                 cv2.rectangle(frame, (bbox[0], bbox[1]),
                               (bbox[0]+bbox[2], bbox[1]+bbox[3]),
                               (0, 255, 0), 3)
-            cv2.imshow(video_name, frame)
-            cv2.waitKey(40)
+            #cv2.imshow(video_name, frame)
+            #cv2.waitKey(40)
+            plt.imshow(frame)
+            plt.show()
 
 
 if __name__ == '__main__':
