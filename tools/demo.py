@@ -85,8 +85,8 @@ def main():
               init_rect = [float(v) for v in f.read().split(',')]
             tracker.init(frame, init_rect)
             first_frame = False
-            p1 = (init_rect[0], init_rect[1])
-            p2 = (init_rect[0]+init_rect[2], init_rect[1]+init_rect[3])
+            p1 = (int(init_rect[0]), int(init_rect[1]))
+            p2 = (int(init_rect[0]+init_rect[2]), int(init_rect[1]+init_rect[3]))
             cv2.rectangle(frame, p1, p2, (0, 255, 0), 1)  
             cv2.imwrite(f'./tr_{i:06d}.jpg', frame)
             edges = cv2.Canny(frame, 100, 200, L2gradient=True)
