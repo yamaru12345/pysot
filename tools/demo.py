@@ -82,6 +82,7 @@ def main():
     for i, frame in enumerate(get_frames(args.video_name)):
         if first_frame:
             init_rect = args.box
+            print(init_rect)
             tracker.init(frame, init_rect)
             first_frame = False
         else:
