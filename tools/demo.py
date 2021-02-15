@@ -92,6 +92,7 @@ def main():
             edges = cv2.Canny(frame, 100, 200, L2gradient=True)
             edges = cv2.cvtColor(edges, cv2.COLOR_GRAY2BGR).copy()
             edges[np.where((edges == [0, 0, 0]).all(axis=2))] = [17, 17, 56]
+            edges = edges[:, :, ::-1]
             cv2.rectangle(edges, p1, p2, (0, 255, 0), 1)  
             cv2.imwrite(f'./eg_{i:06d}.jpg', edges)
             
@@ -100,6 +101,7 @@ def main():
             edges = cv2.Canny(frame, 100, 200, L2gradient=True)
             edges = cv2.cvtColor(edges, cv2.COLOR_GRAY2BGR).copy()
             edges[np.where((edges == [0, 0, 0]).all(axis=2))] = [17, 17, 56]
+            edges = edges[:, :, ::-1]
             if 'polygon' in outputs:
                 polygon = np.array(outputs['polygon']).astype(np.int32)
                 cv2.polylines(frame, [polygon.reshape((-1, 1, 2))],
